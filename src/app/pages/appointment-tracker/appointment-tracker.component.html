@@ -1,0 +1,71 @@
+<div class="container">
+  <h1>All Appointments</h1>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div class="row my-3">
+    <div class="col">
+      <a
+        routerLink="/create-appointment"
+        class="btn btn-primary"
+        
+        >Add Appointment</a
+      >
+      <a
+        routerLink="/add_payment"
+        class="btn btn-primary"
+        >Add Payment</a
+      >
+    </div>
+  </div>
+
+  <ng-container *ngIf="appointmentsData.length === 0; else appointmentsList">
+    <div class="alert alert-warning">
+      <p class="text-center">No appointments available, please try again later.</p>
+    </div>
+  </ng-container>
+
+  
+  <ng-template #appointmentsList>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Carer</th>
+          <th>Scheduled Time</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let appointment of appointmentsData">
+          <td>{{ appointment.f_name }} {{ appointment.l_name }}</td>
+          <td>{{ appointment.category }}</td>
+          <td>{{ appointment.scheduled_time }}</td>
+          <td>
+            <div class="d-flex align-items-center">
+              <a
+                routerLink="/appointment/view-appointment/{{ appointment.id}}"
+                class="btn btn-info"
+                >View</a
+              >
+              <a
+                routerLink="/appointment/edit-appointment/{{ appointment.id }}"
+                class="btn btn-warning mx-2"
+                >Edit</a
+              >
+              <!-- <button
+                type="button"
+                (click)="selectDelete(this.course['id'])"
+                class="btn btn-danger"
+              >
+                Delete
+              </button> -->
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
+</div>

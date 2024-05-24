@@ -1,0 +1,38 @@
+/* Hero section styles */
+.hero-container {
+  display: flex;
+  height: 70vh;
+  
+  
+}
+
+.shape-section {
+  position: relative;
+  width: 19%;
+  background-color: #f5f5dc; /* Replace with your desired background color */
+  clip-path: polygon(0 0, 100% 0%, 100% 94%, 0% 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shape-section .overlay {
+  text-align:right;
+  color: #000; /* Text color */
+}
+
+.shape-section h1 {
+  font-size: 4em;
+  margin: 0;
+}
+
+.shape-section .highlight {
+  color: #32c671;
+}
+
+.image-section {
+  width: 82%;
+  background: url('https://vakids.org/wp-content/uploads/2022/02/Untitled-design-2.jpg') no-repeat center center/cover;
+  clip-path: polygon(50% 0%, 100% 0, 100% 85%, 74% 95%, 49% 84%, 0 94%, 0 0);
+
+}

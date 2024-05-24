@@ -1,0 +1,23 @@
+<form (ngSubmit)="LogNewSymptom(symptomLogForm)" #symptomLogForm="ngForm">
+    <div class="form-group">
+      <label for="user_id">User ID:</label>
+      <input type="text" class="form-control" id="user_id" name="user_id" ngModel required>
+    </div>
+  
+    <select name="symptom_id" id="symptom_id" [(ngModel)]="symptom_id" class="form-select" required>
+      <option value="">Please select a carer</option>
+      <option value="{{ symptom.id }}" *ngFor="let symptom of allSymptom">
+        {{ symptom.name }}
+      </option>
+    </select>
+    
+
+  
+    <div class="form-group">
+      <label for="scheduled_time">Scheduled Time:</label>
+      <input type="datetime-local" class="form-control" id="scheduled_time" name="scheduled_time" ngModel required>
+    </div>
+  
+    <button type="submit" class="btn btn-primary">Add Appointment</button>
+  </form>
+  

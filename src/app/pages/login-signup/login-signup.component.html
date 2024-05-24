@@ -1,0 +1,127 @@
+<div [ngSwitch]="isLoginOption" class="col-5 mx-auto my-5">
+  <form
+    #loginForm="ngForm"
+    (ngSubmit)="authSubmit(loginForm)"
+    class="card p-3"
+    *ngSwitchDefault=""
+  >
+    <h1 class="text-center">{{ isLoginOption ? 'Login' : 'Sign Up' }}</h1>
+
+    <div *ngIf="!isLoginOption">
+      <h2>Personal Information</h2>
+      <div class="row">
+        <div class="col">
+          <label for="f_name" class="form-label">First Name</label>
+          <input type="text" name="f_name" id="f_name" class="form-control" ngModel required />
+        </div>
+        <div class="col">
+          <label for="l_name" class="form-label">Last Name</label>
+          <input type="text" name="l_name" id="l_name" class="form-control" ngModel required />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="date_of_birth" class="form-label">Date of Birth</label>
+          <input type="date" name="date_of_birth" id="date_of_birth" class="form-control" ngModel required />
+        </div>
+        <div class="col">
+          <label for="due_date" class="form-label">Due Date</label>
+          <input type="date" name="due_date" id="due_date" class="form-control" ngModel />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="phone_num" class="form-label">Phone Number</label>
+          <input type="text" name="phone_num" id="phone_num" class="form-control" ngModel required />
+        </div>
+        <div class="col">
+          <label for="location" class="form-label">Location</label>
+          <input type="text" name="location" id="location" class="form-control" ngModel required />
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="isLoginError">
+      <div class="col">
+        <p class="text-danger">{{ loginErrorMessage }}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          class="form-control"
+          ngModel
+          required
+          email
+        />
+        <p *ngIf="loginForm.controls['email']?.invalid && loginForm.controls['email']?.touched">
+          <small class="text-danger">Please enter a valid email address.</small>
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          class="form-control"
+          ngModel
+          required
+          minlength="8"
+        />
+        <p *ngIf="loginForm.controls['password']?.invalid && loginForm.controls['password']?.touched">
+          <small class="text-danger">Password too short.</small>
+        </p>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="!isLoginOption">
+      <div class="col">
+        <label for="pw_confirm" class="form-label">Confirm Password</label>
+        <input
+          type="password"
+          name="pw_confirm"
+          id="pw_confirm"
+          class="form-control"
+          ngModel
+          required
+          minlength="8"
+        />
+        <p *ngIf="pw !== pw_confirm">
+          <small class="text-danger">Password fields do not match.</small>
+        </p>
+      </div>
+    </div>
+
+    <div class="row my-2">
+      <div class="col">
+        <input
+          type="submit"
+          value="{{ isLoginOption ? 'Login' : 'Sign Up' }}"
+          class="btn btn-primary w-100"
+          [disabled]="loginForm.invalid"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <p>
+          {{ isLoginOption ? "Don't have an account?" : 'Already have an account?' }}
+          <span
+            (click)="isLoginOption = !isLoginOption"
+            class="link-primary login-or-signup"
+          >{{ isLoginOption ? 'Click to sign up.' : 'Click to login.' }}</span>
+        </p>
+      </div>
+    </div>
+  </form>
+</div>

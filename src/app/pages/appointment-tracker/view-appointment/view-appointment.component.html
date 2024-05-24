@@ -1,0 +1,22 @@
+<div class="container">
+    <h1>Appointment Details</h1>
+  
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <ng-container *ngIf="!appointmentsData; else appointmentDetails">
+      <div class="alert alert-warning">
+        <p class="text-center">No appointment available, please try again later.</p>
+      </div>
+    </ng-container>
+  
+    <ng-template #appointmentDetails>
+      <div *ngFor="let appointment of appointmentsData" class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ appointment.f_name }} {{ appointment.l_name }}</h5>
+          <p class="card-text"><strong>Scheduled Time:</strong> {{ appointment.scheduled_time }}</p>
+        </div>
+      </div>
+    </ng-template>
+</div>

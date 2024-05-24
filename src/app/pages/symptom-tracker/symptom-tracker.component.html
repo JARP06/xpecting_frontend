@@ -1,0 +1,47 @@
+<div class="container">
+    <h1>All Symptom Logs</h1>
+  
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <div class="row my-3">
+      <div class="col">
+        <a routerLink="/log-symptom" class="btn btn-primary">Add Symptom</a>
+      </div>
+    </div>
+  
+    <ng-container *ngIf="symptomsData.length === 0; else symptomLogsList">
+      <div class="alert alert-warning">
+        <p class="text-center">No symptom logs available, please try again later.</p>
+      </div>
+    </ng-container>
+  
+    
+    <ng-template #symptomLogsList>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Symptom</th>
+            <th>Severity</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let symptom of symptomsData">
+            <td>{{ symptom.log_time }}</td>
+            <td>{{ symptom.name }}</td>
+            <td>{{ symptom.severity }}</td>
+            <td>
+              <div class="d-flex align-items-center">
+                <a routerLink="/symptom-tracker/view-symptom/{{ symptom.id }}" class="btn btn-info">View</a>
+                <a routerLink="/symptom-tracker/edit-symptom/{{ symptom.id }}" class="btn btn-warning mx-2">Edit</a>
+                <!-- <button type="button" (click)="deleteSymptom(symptom.id)" class="btn btn-danger">Delete</button> -->
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-template>
+  </div>

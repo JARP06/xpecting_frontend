@@ -1,0 +1,28 @@
+<div class="container" *ngIf="user">
+  <h1>User Profile</h1>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div>
+    <h2>{{ user.f_name }} {{ user.l_name }}</h2>
+    <p>Email: {{ user.email }}</p>
+    <p>Phone Number: {{ user.phone_num }}</p>
+    <p>Date of Birth: {{ user.date_of_birth | date:'shortDate' }}</p>
+    <p>Due Date: {{ user.due_date | date:'shortDate' }}</p>
+    <p>Location: {{ user.location }}</p>
+  </div>
+
+  <div *ngFor="let log of symptomLogs.slice(0, 3)" class="card">
+    <div class="card-header">
+      {{ log.log_time | date:'short' }}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ log.name }}</h5>
+      <p class="card-text">Severity: {{ log.severity }}</p>
+    </div>
+  </div>
+
+  <button (click)="resetPassword()" class="btn btn-primary">Reset Password</button>
+</div>
