@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router'; // Import ActivatedRoute
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { SymptomLogService } from 'src/app/services/symptom-log.service';
 import { SymptomLog } from 'src/app/models/symptom-log';
 import { AuthService } from 'src/app/services/auth.service';
 import { Users } from 'src/app/models/users';
-import { HttpErrorResponse } from '@angular/common/http'; // Import HttpErrorResponse for error handling
+import { HttpErrorResponse } from '@angular/common/http';
+import { AppointmentService } from 'src/app/services/appointment.service';
+import { Appointment } from 'src/app/models/appointment';
+import { NgForm } from '@angular/forms'; // Import NgForm
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-user-profile',
@@ -12,14 +17,22 @@ import { HttpErrorResponse } from '@angular/common/http'; // Import HttpErrorRes
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
-  symptomLogs: SymptomLog[] = []; // Change lastSymptomLog to symptomLogs for displaying multiple logs
+  symptomLogs: SymptomLog[] = [];
+  appointments: Appointment[] = [];
   errorMessage: string | null = null;
   user: Users | null = null;
+  upcomingAppointments: Appointment[] = [];
+  recentSymptomLogs: SymptomLog[] = [];
+  newPassword: string = ''; 
+
+
+    @ViewChild('newPassword') newPasswordElement!: ElementRef<HTMLInputElement>;
 
   constructor(
     private symptomLogService: SymptomLogService,
+    private appointmentService: AppointmentService,
     private authService: AuthService,
-    private route: ActivatedRoute // Inject ActivatedRoute
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -27,7 +40,7 @@ export class UserProfileComponent implements OnInit {
       next: (res) => {
         console.log('User profile retrieved:', res);
         this.user = res.data.user;
-        this.allSymptomsLogged(); // Call method to get symptom logs
+        this.loadUserData();
       },
       error: (error: HttpErrorResponse) => {
         this.errorMessage = `Error retrieving user profile: ${error.message}`;
@@ -36,47 +49,112 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  allSymptomsLogged(): void {
+  loadUserData(): void {
+    this.loadSymptomLogs();
+    this.loadAppointments();
+  }
+
+  loadSymptomLogs(): void {
     this.symptomLogService.allSymptomsLogged().subscribe(
       (res) => {
-        if (res && res.status === 'error') {
-          this.symptomLogs = []; // Change symptomsData to symptomLogs
-          this.errorMessage = 'Error retrieving symptom logs';
-        } else if (res && res.status === 'success' && res.data && Array.isArray(res.data)) {
-          this.symptomLogs = res.data.slice(0, 3); // Change symptomsData to symptomLogs
-          console.log(this.symptomLogs);
+        if (res && res.status === 'success' && res.data && Array.isArray(res.data)) {
+          this.symptomLogs = res.data.filter(symptom => symptom.user_id === this.user?.id);
+          this.recentSymptomLogs = this.symptomLogs.slice(-3); // Get last 3 symptom logs
+          console.log('Symptom logs:', this.symptomLogs);
           this.errorMessage = null;
         } else {
-          this.errorMessage = 'Unexpected response structure';
+          this.errorMessage = 'Error retrieving symptom logs';
         }
       },
-      (error: HttpErrorResponse) => { // Adjust error type
+      (error: HttpErrorResponse) => {
         this.errorMessage = `Error: ${error.status} - ${error.message}`;
-        console.error('There was an error!', error);
+        console.error('Error retrieving symptom logs:', error);
       }
     );
   }
 
-  resetPassword(): void {
-    if (this.user && this.user.id) {
-      this.authService.resetPassword(this.user.id).subscribe({
-        next: (res) => {
-          if (res.status === 'success') {
-            console.log(res.message);
-            // Perform success action, e.g., show a success message
-          } else {
-            console.error('Error resetting password:', res.message);
-            // Handle unexpected response structure
-          }
-        },
-        error: (error: HttpErrorResponse) => {
-          console.error('Error resetting password:', error);
-          // Handle error, e.g., show an error message
+  loadAppointments(): void {
+    this.appointmentService.allAppointments2().subscribe(
+      (res) => {
+        if (res.status === 'success' && Array.isArray(res.data)) {
+          this.appointments = res.data.filter(appointment => appointment.user_id === this.user?.id);
+          console.log('All Appointments:', this.appointments); // Log all appointments
+          const now = new Date();
+          // Filter appointments in the future and sort by scheduled time
+          const futureAppointments = this.appointments
+            .filter(appointment => new Date(appointment.scheduled_time) >= now)
+            .sort((a, b) => new Date(a.scheduled_time).getTime() - new Date(b.scheduled_time).getTime());
+          console.log('Future Appointments:', futureAppointments); // Log future appointments
+          console.log('Total Future Appointments:', futureAppointments.length); // Log total future appointments
+          // Take the next 3 upcoming appointments
+          this.upcomingAppointments = futureAppointments.slice(0, 3);
+          console.log('Upcoming Appointments:', this.upcomingAppointments); // Log upcoming appointments
+          this.errorMessage = null;
+        } else {
+          this.errorMessage = 'Error retrieving appointments';
         }
-      });
-    } else {
-      console.error('User data is missing or incomplete');
-      // Handle case where user data is not available
-    }
+      },
+      (error: HttpErrorResponse) => {
+        this.errorMessage = `Error: ${error.status} - ${error.message}`;
+        console.error('Error retrieving appointments:', error);
+      }
+    );
   }
+
+  getUserAge(dateOfBirth: string | Date): number {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  }
+
+  getWeeksRemaining(dueDate: string | Date): number {
+    const now = new Date();
+    const due = new Date(dueDate);
+    const diffInMs = due.getTime() - now.getTime();
+    return Math.ceil(diffInMs / (1000 * 60 * 60 * 24 * 7));
+  }
+
+  isAgeRedBorder(): boolean {
+    const age = this.user ? this.getUserAge(this.user.date_of_birth) : 0;
+    return age <= 17 || age >= 35;
+  }
+  resetPassword(id: number, newPassword: string): void {
+    const newPassword = this.newPasswordElement.nativeElement.value;
+    this.authService.resetPassword(id, newPassword).subscribe({
+        next: (res) => {
+            console.log(res);
+            if (res.status === 'success') {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: `${res.message}, login with new password`,
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+
+                setTimeout(() => {
+                    this.authService.logout();
+                    window.location.reload();
+                }, 1500);
+            }
+        },
+        error: (error) => {
+            console.log(error);
+            if (error.error) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: `${error.error.message}`,
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            }
+        }
+    });
 }
+}  

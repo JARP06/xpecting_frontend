@@ -1,67 +1,57 @@
-<header>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-      <div class="container-fluid">
-        <button
-          class="navbar-toggler"
-          type="button"
-          aria-expanded="false"
-        >
-          <i class="fas fa-bars"></i>
-        </button>
-        
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item active">
-              <a class="nav-link" aria-current="page" routerLink="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="pregnancy-101">Pregnancy 101</a>
-            </li>
-         
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Trackers
-              </a>
+<nav class="navbar navbar-expand-lg navbar-light bg-white" [ngClass]="{'overlay-header': isScrolled}">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <!-- Logo -->
+    <a class="navbar-brand" href="#" routerLink="/">
+      <img src="assets/images/Xpecting (Small).png" alt="Logo" class="logo">
+    </a>
 
-            <ul class="dropdown-menu">
-              <li>
-                <a class="dropdown-item" routerLink="/all-appointments">Appointment Tracker</a>
-              </li>
-              <li>
-                <a
-                class="dropdown-item" routerLink="/all-logged-symptoms">Symptom Tracker</a
-                >
-              </li>
-            </ul>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/">About Us</a>
-            </li>
+    <!-- Toggler for mobile view -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
 
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link" aria-current="page" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="pregnancy-101">Pregnancy 101</a>
+        </li>
+
+        <li class="nav-item dropdown" *ngIf="user">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Trackers
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" routerLink="/all-appointments">Appointment Tracker</a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/all-logged-symptoms">Symptom Tracker</a>
+            </li>
           </ul>
-          <ul class="navbar-nav mx-4">
-            <li class="nav-item" >
-              <a routerLink="/login-signup" class="nav-link">Login</a>
-            </li>
-            <li class="nav-item" *ngIf="user">
-              <a [routerLink]="['/user-profile', user.id]" class="nav-link">Profile</a>
-          </li>
-          
-            <li class="nav-item my-auto mx-3" *ngIf="user">
-              <span
-                ><small>{{ user.email }}</small></span
-              >
-            </li>
-    
-            <li class="nav-item" *ngIf="user">
-              <a (click)="logoutUser()" class="nav-link logout-btn">Logout</a>
-            </li>
-            </ul>
-        </div>
-    </nav>
-  </header>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" routerLink="about-us">About Us</a>
+        </li>
+      </ul>
+    </div>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item" *ngIf="!user">
+          <button routerLink="/login-signup" class="nav-link btn btn-login">Login</button>
+        </li>
+        <li class="nav-item" *ngIf="user">
+          <a [routerLink]="['/user-profile', user.id]" class="nav-link">Profile</a>
+        </li>
+        <li class="nav-item my-auto mx-3" *ngIf="user">
+          <span><small>{{ user.email }}</small></span>
+        </li>
+        <li class="nav-item" *ngIf="user">
+          <a (click)="logoutUser()" class="nav-link logout-btn">Logout</a>
+        </li>
+      </ul>
+  </div>
+</nav>

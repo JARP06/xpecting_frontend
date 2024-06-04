@@ -1,0 +1,52 @@
+
+  
+  .navbar-scroll {
+    background-color: rgb(255, 255, 255) !important;
+    width: 100%;
+    height: 10px;
+  }
+  .logo {
+    width: 120px;
+}
+/* Initial state: Transparent background */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: transparent; /* Initial transparent background */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.overlay-header {
+  background-color: rgba(255, 255, 255, 0.9); /* Background color on scroll */
+}
+
+
+
+/* Set navbar link color to white */
+.navbar .nav-link {
+  color: #000000 !important;
+}
+
+/* Set navbar link hover color to a different color if needed */
+.navbar .nav-link:hover {
+  color: #fabebe !important; /* Example hover color */
+}
+/* Style for the login button */
+.navbar .btn-login {
+  background-color: #fff; /* Match background to navbar */
+  border: 1px solid #fff; /* Border color */
+  color: #000000; /* Text color */
+  padding: 0.5rem 1rem; /* Padding for the button */
+  font-size: 1rem; /* Font size */
+  font-weight: 500; /* Font weight */
+  border-radius: 0.25rem; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+.navbar .btn-login:hover {
+  background-color: #fff; /* Background color on hover */
+  color: #000; /* Text color on hover */
+}

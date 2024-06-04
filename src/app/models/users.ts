@@ -5,7 +5,7 @@ export interface Users {
     email: string;
     phone_num: string;
     date_of_birth: Date;
-    due_date: Date;
+    due_date: string | Date; 
     location: string;
     password: string;
     role: string;

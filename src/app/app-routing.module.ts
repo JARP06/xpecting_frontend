@@ -15,6 +15,7 @@ import { EditSymptomLoggedComponent } from './pages/symptom-tracker/edit-symptom
 import { DeleteSymptomLoggedComponent } from './pages/symptom-tracker/delete-symptom-logged/delete-symptom-logged.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { AuthGuard } from './guard/auth.guard';
+import { AboutUsComponent } from './pages/about-us/about-us.component';
 
 const routes: Routes = [
   { path: '', title: 'Home', component:HomeComponent},
@@ -89,6 +90,12 @@ const routes: Routes = [
   title: 'My Profile',
   component: UserProfileComponent,
   canActivate: [AuthGuard],
+},
+{
+  path: 'about-us',
+  title: 'About Us',
+  component: AboutUsComponent,
+  
 },
 ];
 

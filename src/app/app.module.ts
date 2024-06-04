@@ -21,6 +21,10 @@ import { DeleteAppointmentComponent } from './pages/appointment-tracker/delete-a
 import { LoginSignupComponent } from './pages/login-signup/login-signup.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AboutUsComponent } from './pages/about-us/about-us.component';
+import { PaginatorComponent } from './shared/components/paginator.component';
+
 
 @NgModule({
   declarations: [
@@ -40,13 +44,17 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
     DeleteAppointmentComponent,
     LoginSignupComponent,
     SymptomTrackerComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    AboutUsComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule, 
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

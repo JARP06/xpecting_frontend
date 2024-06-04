@@ -1,0 +1,71 @@
+/* Hero section styles */
+.hero-container {
+  display: flex;
+  height: 80vh;
+}
+
+.shape-section {
+  position: relative;
+  width: 20%;
+  background-color: #f5f5dc; /* Replace with your desired background color */
+  clip-path: polygon(0 0, 100% 0, 100% 94%, 0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shape-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(254, 248, 217, 0.37); /* Updated color for transparency */
+}
+
+.shape-section .overlay {
+  text-align: right;
+  position: relative;
+  color: #000; /* Text color */
+  z-index: 1;
+}
+
+.shape-section h1 {
+  font-size: 4em;
+  margin: 0;
+}
+
+.shape-section .highlight {
+  color: #32c671;
+}
+
+.image-section {
+  width: 80%;
+  background: url('src\assets\images\reading pregnant.jpg') no-repeat center center/cover;
+  clip-path: polygon(50% 0%, 100% 0, 100% 85%, 74% 95%, 49% 84%, 0 94%, 0 0);
+  position: relative;
+}
+
+.image-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(254, 248, 217, 0.18); /* Updated color for transparency */
+}
+
+/* Centering container */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Padding for high-risk pregnancy section */
+.py-5 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}

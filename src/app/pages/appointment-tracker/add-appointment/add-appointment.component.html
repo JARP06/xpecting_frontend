@@ -1,23 +1,29 @@
-<form (ngSubmit)="addNewAppointment(appointmentForm)" #appointmentForm="ngForm">
+<section class="appointment-form-container">
+  <form #appointmentForm="ngForm" (ngSubmit)="addNewAppointment(appointmentForm)">
     <div class="form-group">
-      <label for="user_id">User ID:</label>
-      <input type="text" class="form-control" id="user_id" name="user_id" ngModel required>
+      <input type="hidden" name="user_id" [ngModel]="user_id">
     </div>
   
-    <select name="carer_id" id="carer_id" [(ngModel)]="carer_id" class="form-select" required>
-      <option value="">Please select a carer</option>
-      <option value="{{ carer.id }}" *ngFor="let carer of allCarers">
-        {{ carer.category }}
-      </option>
-    </select>
-    
-
+    <div class="form-group">
+      <label for="carer_id">Carer:</label>
+      <select name="carer_id" id="carer_id" [(ngModel)]="carer_id" class="form-select" required>
+        <option value="">Please select a carer</option>
+        <option *ngFor="let carer of allCarers" [value]="carer.id">
+          {{ carer.category }}
+        </option>
+      </select>
+    </div>
   
     <div class="form-group">
       <label for="scheduled_time">Scheduled Time:</label>
-      <input type="datetime-local" class="form-control" id="scheduled_time" name="scheduled_time" ngModel required>
+      <input type="datetime-local" class="form-control" id="scheduled_time" name="scheduled_time" [(ngModel)]="scheduled_time" required>
+    </div>
+
+    <div class="form-group">
+      <label for="note">Note:</label>
+      <textarea class="form-control" id="note" name="note" [(ngModel)]="note"></textarea>
     </div>
   
     <button type="submit" class="btn btn-primary">Add Appointment</button>
   </form>
-  
+</section>

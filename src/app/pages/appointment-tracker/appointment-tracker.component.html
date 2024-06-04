@@ -1,3 +1,4 @@
+<section class="content-section ">
 <div class="container">
   <h1>All Appointments</h1>
 
@@ -12,11 +13,6 @@
         class="btn btn-primary"
         
         >Add Appointment</a
-      >
-      <a
-        routerLink="/add_payment"
-        class="btn btn-primary"
-        >Add Payment</a
       >
     </div>
   </div>
@@ -42,30 +38,42 @@
         <tr *ngFor="let appointment of appointmentsData">
           <td>{{ appointment.f_name }} {{ appointment.l_name }}</td>
           <td>{{ appointment.category }}</td>
-          <td>{{ appointment.scheduled_time }}</td>
+          <td>{{ appointment.scheduled_time | date: 'yyyy-MM-dd' }}</td>
           <td>
             <div class="d-flex align-items-center">
               <a
                 routerLink="/appointment/view-appointment/{{ appointment.id}}"
                 class="btn btn-info"
-                >View</a
-              >
+              >View</a>
               <a
                 routerLink="/appointment/edit-appointment/{{ appointment.id }}"
                 class="btn btn-warning mx-2"
-                >Edit</a
-              >
-              <!-- <button
-                type="button"
-                (click)="selectDelete(this.course['id'])"
-                class="btn btn-danger"
-              >
-                Delete
-              </button> -->
+              >Edit</a>
+              <button class="btn btn-danger" (click)="confirmDelete(appointment.id)">Delete</button>
             </div>
           </td>
+          
         </tr>
       </tbody>
     </table>
   </ng-template>
 </div>
+<div class="resource-section">
+  <h3>Tips</h3>
+  <div class="resource-card">
+    <h4>First Prenatal Visit</h4>
+    <p>Schedule your first prenatal visit as soon as you have a positive home pregnancy test. Good prenatal care is crucial for a healthy pregnancy and baby. The first appointment usually occurs between weeks 6 and 8. Start acting pregnant immediately, such as taking a prenatal vitamin and following a healthy diet. If you suspect a high-risk pregnancy, check with your practitioner for an earlier appointment.</p>
+  </div>  
+  <div class="resource-card">
+    <h4>Preparing for Your First Pregnancy Appointment</h4>
+    <p>Before your first prenatal appointment, prepare by:</p>
+    <ul>
+      <li>Make a list of key health facts, including personal medical history, mental health history, gynecological history, obstetrical history, and potential disease exposure.</li>
+      <li>Take stock of your medicine cabinet and note any medications and supplements you take.</li>
+      <li>Find out about health conditions that run in your and your partner’s families.</li>
+      <li>Jot down your questions to ensure you cover all your concerns during the appointment.</li>
+    </ul>
+  </div>
+  
+</div>
+</section>

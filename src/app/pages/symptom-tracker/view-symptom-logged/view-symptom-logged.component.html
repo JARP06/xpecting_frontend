@@ -1,22 +1,27 @@
-<div class="container">
-    <h1>Symptom Logged Details</h1>
+<section style="padding-top: 70px;">
   
-    <div *ngIf="errorMessage" class="alert alert-danger">
-      {{ errorMessage }}
+  <div class="container">
+  <h1>Symptom Logged Details</h1>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <ng-container *ngIf="!symptomsData; else symptomsDetails">
+    <div class="alert alert-warning">
+      <p class="text-center">No Symptom Logged available, please try again later.</p>
     </div>
-  
-    <ng-container *ngIf="!symptomsData; else symptomsDetails">
-      <div class="alert alert-warning">
-        <p class="text-center">No Symptom Logged available, please try again later.</p>
+  </ng-container>
+
+  <ng-template #symptomsDetails>
+    <div *ngFor="let symptom of symptomsData" class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ symptom.f_name }} {{ symptom.l_name }}</h5>
+        <p class="card-text"><strong>Scheduled Time:</strong> {{ symptom.log_time }}</p>
+        <!-- Display the note -->
+        <p class="card-text"><strong>Note:</strong> {{ symptom.note }}</p>
       </div>
-    </ng-container>
-  
-    <ng-template #symptomsDetails>
-      <div *ngFor="let symptom of symptomsData" class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{ symptom.f_name }} {{ symptom.l_name }}</h5>
-          <p class="card-text"><strong>Scheduled Time:</strong> {{ symptom.log_time }}</p>
-        </div>
-      </div>
-    </ng-template>
+    </div>
+  </ng-template>
 </div>
+</section>

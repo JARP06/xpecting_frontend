@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiResponse } from '../models/api-response';
@@ -13,37 +13,52 @@ export class SymptomLogService {
 
   constructor(private _http: HttpClient) {}
 
+  // Function to get HTTP headers with authorization token
+  private getHeaders(): HttpHeaders {
+    const authToken = localStorage.getItem('authToken'); // Retrieve authentication token from local storage
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${authToken}` // Set Authorization header with the token
+    });
+  }
+
   allSymptomsLogged(): Observable<ApiResponse<SymptomLog[]>> {
-    return this._http.get<ApiResponse<SymptomLog[]>>(this.API_URL_SYMPTOM_LOG).pipe(
+    const headers = this.getHeaders(); // Get headers with authorization token
+    return this._http.get<ApiResponse<SymptomLog[]>>(this.API_URL_SYMPTOM_LOG, { headers }).pipe(
       map(res => res)
     );
   }
 
   getOneSymptomLogged(slId: number): Observable<ApiResponse<SymptomLog>> {
-    return this._http.get<ApiResponse<SymptomLog>>(`${this.API_URL_SYMPTOM_LOG}${slId}`).pipe(
+    const headers = this.getHeaders(); // Get headers with authorization token
+    return this._http.get<ApiResponse<SymptomLog>>(`${this.API_URL_SYMPTOM_LOG}symptoms/log/${slId}`, { headers }).pipe(
       map(res => res)
     );
   }
 
   addToSymptomLog(data: SymptomLog): Observable<ApiResponse<SymptomLog>> {
-    return this._http.post<ApiResponse<SymptomLog>>(this.API_URL_SYMPTOM_LOG, data).pipe(
+    const headers = this.getHeaders(); // Get headers with authorization token
+    return this._http.post<ApiResponse<SymptomLog>>(this.API_URL_SYMPTOM_LOG, data, { headers }).pipe(
       map(res => res)
     );
   }
 
   editSymptomLogged(data: SymptomLog, slId: number): Observable<ApiResponse<SymptomLog>> {
-    return this._http.patch<ApiResponse<SymptomLog>>(`${this.API_URL_SYMPTOM_LOG}${slId}`, data).pipe(
+    const headers = this.getHeaders(); // Get headers with authorization token
+    return this._http.put<ApiResponse<SymptomLog>>(`${this.API_URL_SYMPTOM_LOG}symptoms/log/${slId}`, data, { headers }).pipe(
       map(res => res)
     );
   }
 
   deleteSymptomLog(slId: number): Observable<ApiResponse<void>> {
-    return this._http.delete<ApiResponse<void>>(`${this.API_URL_SYMPTOM_LOG}${slId}`).pipe(
+    const headers = this.getHeaders(); // Get headers with authorization token
+    return this._http.delete<ApiResponse<void>>(`${this.API_URL_SYMPTOM_LOG}symptoms/log/${slId}`, { headers }).pipe(
       map(res => res)
     );
   }
 
   getLastSymptomLog(): Observable<{ data: SymptomLog }> {
-    return this._http.get<{ data: SymptomLog }>(`${this.API_URL_SYMPTOM_LOG}most-recent-logged`);
+    const headers = this.getHeaders(); // Get headers with authorization token
+    return this._http.get<{ data: SymptomLog }>(`${this.API_URL_SYMPTOM_LOG}symptoms/most-recent`, { headers });
   }
 }

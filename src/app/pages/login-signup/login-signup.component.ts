@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-
 import Swal from 'sweetalert2';
 
 @Component({
@@ -20,7 +19,6 @@ export class LoginSignupComponent implements OnInit {
   loginErrorMessage: string = '';
 
   user: any; // Ensure the user property is properly initialized
-
 
   constructor(
     private authService: AuthService,
@@ -124,4 +122,4 @@ export class LoginSignupComponent implements OnInit {
     }
     formData.resetForm();
   }
-}  
+}

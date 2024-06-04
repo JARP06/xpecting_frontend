@@ -40,11 +40,18 @@ export class AuthService {
   login(data: any): Observable<any> {
     return this._http.post<any>(this.API_URL_AUTH, data).pipe(
       map((res) => {
+        // If login is successful, update authToken and emit user data
+        if (res.status === 'success' && res.data && res.data.token) {
+          this.authToken = res.data.token;
+          this.saveAuthToken();
+          // Emit user data to currUserSubject
+          this.currUserSubject.next(res.data.user);
+        }
         return res;
       })
     );
   }
-
+  
   /**
    * To logout a user
    * @returns response from api
@@ -108,10 +115,9 @@ export class AuthService {
     );
   }
 
-  resetPassword(userId: number): Observable<any> {
-    return this._http.post(`${this.API_URL_AUTH}resetPassword`, { userId });
+  resetPassword(userId: number, data: any): Observable<any> {
+    return this._http.post(`${this.API_URL_AUTH}resetPassword`, { userId, ...data });
   }
-
 
   // resetPassword(id: number, data: any): Observable<any> {
   //   return this._http

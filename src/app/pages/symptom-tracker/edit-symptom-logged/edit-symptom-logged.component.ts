@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 export class EditSymptomLoggedComponent implements OnInit {
   user_id: string = '';
   symptom_id: string = '';
-  log_time: Date = new Date();
+  log_time: string = ''; // Change to string type
   selectedSymptomId: string = '';
 
   allSymptom: any;
@@ -28,10 +28,10 @@ export class EditSymptomLoggedComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.route.params.subscribe((params) =>{
-      this.slId = params ['slId']
+      this.slId = params['slId'];
+      this.getAllSymptoms();
+      this.getSymptomLoggedData();
     });
-    this.getAllSymptoms();
-    this.getSymptomLoggedData();
   }
   getAllSymptoms() {
     this.symptomService.getAllSymptoms().subscribe({
@@ -41,28 +41,32 @@ export class EditSymptomLoggedComponent implements OnInit {
       error: (error) =>{
   
       }
-    })
+    });
   }
   getSymptomLoggedData(){
     this.symptomLogService.getOneSymptomLogged(this.slId).subscribe((res)=>{
       if (res.status == 'error'){
       }else{
-        this.symptom= res.data;
+        this.symptom = res.data;
+        // Assign selectedSymptomId with the value of symptom_id
+        this.selectedSymptomId = this.symptom.symptom_id;
+        // Convert the log_time to ISO string format
+        this.log_time = new Date(this.symptom.log_time).toISOString().slice(0, 16);
       }
     });
   }
   editLoggedSymptom(data:NgForm){
-        // Format log_time before sending
-        const formattedData = {
-          ...data.value,
-          log_time: new Date(data.value.log_time).toISOString()  // Convert to ISO string
-      };
-    this.symptomLogService.editSymptomLogged(data.value, this.slId).subscribe((res)=> {
+    // Format log_time before sending
+    const formattedData = {
+      ...data.value,
+      log_time: new Date(data.value.log_time).toISOString()  // Convert to ISO string
+    };
+    this.symptomLogService.editSymptomLogged(formattedData, this.slId).subscribe((res)=> {
       if (res.status === 'success'){
         Swal.fire({
           position: 'center',
           icon: 'success',
-          title: 'Changes applied to appointment successfully.',
+          title: 'Changes applied to symptom logged successfully.',
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
@@ -72,7 +76,7 @@ export class EditSymptomLoggedComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Failed to apply changes to appointment!',
+          text: 'Failed to apply changes to symptom logged!',
         });
       }
     });
