@@ -14,10 +14,6 @@ export class AppointmentTrackerComponent implements OnInit {
 
   appointmentsData: Appointment[] = [];
   errorMessage: string | null = null;
-  loginErr: boolean = false;
-  userData: any;
-  currentPage = 1;
-  itemsPerPage = 10;
 
   constructor(
     private appointmentService: AppointmentService,
@@ -25,12 +21,11 @@ export class AppointmentTrackerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Fetch appointments when the component initializes
     this.getAllAppointments();
   }
 
   getAllAppointments() {
-    this.appointmentService.allAppointments2().subscribe({
+    this.appointmentService.allAppointments().subscribe({
       next: (res) => {
         if (res.status === 'success' && Array.isArray(res.data)) {
           this.appointmentsData = res.data;
@@ -48,36 +43,19 @@ export class AppointmentTrackerComponent implements OnInit {
   }
 
   confirmDelete(appointmentId: number): void {
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-success mx-1',
-        cancelButton: 'btn btn-danger mx-1',
-      },
-      buttonsStyling: false,
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteAppointment(appointmentId);
+      }
     });
-
-    swalWithBootstrapButtons
-      .fire({
-        title: `Are you sure you want to delete appointment?`,
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!',
-        reverseButtons: true,
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          // Call the delete function if the user confirms deletion
-          this.deleteAppointment(appointmentId);
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire({
-            title: 'Cancelled',
-            text: 'Your appointment is safe :)',
-            icon: 'error',
-          });
-        }
-      });
   }
 
   deleteAppointment(appointmentId: number): void {
@@ -91,7 +69,6 @@ export class AppointmentTrackerComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500
           }).then(() => {
-            // Refresh the list after deletion
             this.getAllAppointments();
           });
         } else {

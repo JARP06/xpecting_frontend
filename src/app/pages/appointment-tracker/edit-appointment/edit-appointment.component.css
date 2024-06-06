@@ -12,10 +12,14 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 90px;
+    margin-bottom: 20px;
+
   }
   
   .form-group {
     margin-bottom: 20px;
+    
   }
   
   label {
@@ -44,5 +48,8 @@
     background-color: #0056b3;
   }
   
-  /* Add any other styling as needed */
+  section{
+    margin-top: 50px;
+    margin-bottom: 190px;
+}
   

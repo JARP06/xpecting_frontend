@@ -114,11 +114,22 @@ export class AuthService {
       })
     );
   }
-
-  resetPassword(userId: number, data: any): Observable<any> {
-    return this._http.post(`${this.API_URL_AUTH}resetPassword`, { userId, ...data });
+  resetPassword(userId: number, currentPassword: string, newPassword: string, confirmNewPassword: string): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.getToken()}`
+    });
+    return this._http.patch(
+      `${this.API_URL_AUTH}reset-password/${userId}`,
+      { currentPassword, newPassword, confirmNewPassword },
+      { headers }
+    );
   }
 
+  // logout(): void {
+  //   localStorage.removeItem('token');
+  //   // Add any other logout logic here if necessary
+  // }
+  
   // resetPassword(id: number, data: any): Observable<any> {
   //   return this._http
   //     .patch<any>(`${this.API_URL_AUTH}/reset-password/${id}`, data)

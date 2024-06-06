@@ -1,6 +1,12 @@
-<section style="padding-top: 70px;"> <!-- Adjust padding-top to match the height of your fixed header -->
+<section class="content-section" style="padding-top: 70px;">
   <div class="container">
-    <h1>All Symptom Logs</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bg-transparent">
+        <li class="breadcrumb-item"><a routerLink="/" class="text-decoration-none text-dark">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">All Logged Symptoms</li>
+      </ol>
+    </nav>
+    <h1>All Logged Symptoms</h1>
   
     <div *ngIf="errorMessage" class="alert alert-danger">
       {{ errorMessage }}
@@ -8,7 +14,7 @@
   
     <div class="row my-3">
       <div class="col">
-        <a routerLink="/log-symptom" class="btn btn-primary">Add Symptom</a>
+        <a routerLink="/log-symptom" class="btn btn-primary">Log Symptom</a>
       </div>
     </div>
   
@@ -37,12 +43,34 @@
               <div class="d-flex align-items-center">
                 <a routerLink="/symptom-tracker/view-symptom/{{ symptom.id }}" class="btn btn-info">View</a>
                 <a routerLink="/symptom-tracker/edit-symptom/{{ symptom.id }}" class="btn btn-warning mx-2">Edit</a>
-                <!-- <button type="button" (click)="deleteSymptom(symptom.id)" class="btn btn-danger">Delete</button> -->
+                <button *ngIf="symptom.id !== undefined" class="btn btn-danger" (click)="confirmDeleteSymptomLogged(symptom.id)">Delete</button>
               </div>
             </td>
           </tr>
         </tbody>
       </table>
     </ng-template>
+    
+  </div>
+  
+  <div class="tip-section">
+    <h3>Tips</h3>
+  
+    <div class="tip-card">
+      <h4>Pregnancy Symptoms to Consult Your Doctor About</h4>
+      <p>If you're experiencing any of the following pregnancy symptoms, it's important to consult your doctor:</p>
+      <ul>
+        <li>Vaginal Bleeding: While some spotting can be normal, heavy bleeding may indicate a problem.</li>
+        <li>Severe Abdominal Pain: Sharp or persistent abdominal pain could signal an issue like ectopic pregnancy or miscarriage.</li>
+        <li>Severe Nausea and Vomiting: Persistent vomiting and inability to keep fluids down may lead to dehydration.</li>
+        <li>Decreased Fetal Movement: If you notice a significant decrease in fetal movement, contact your doctor immediately.</li>
+        <li>Severe Headaches or Visual Disturbances: These could be signs of preeclampsia, a serious condition.</li>
+        <li>Sudden Swelling: Swelling in your hands, feet, or face can be a sign of preeclampsia.</li>
+        <li>Difficulty Breathing: Shortness of breath or difficulty breathing could indicate a problem like pulmonary embolism.</li>
+        <li>Chills or Fever: High fever during pregnancy can be harmful to both you and your baby.</li>
+        <li>Severe Itching: Especially if it's accompanied by nausea, vomiting, loss of appetite, or jaundice, it could indicate a liver problem.</li>
+        <li>Persistent Contractions: Regular contractions before 37 weeks could be a sign of preterm labor.</li>
+      </ul>
+    </div>
   </div>
 </section>

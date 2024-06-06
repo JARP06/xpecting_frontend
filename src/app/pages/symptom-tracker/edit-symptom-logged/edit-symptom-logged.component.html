@@ -1,40 +1,55 @@
 <section class="edit-symptom-container">
-<form (ngSubmit)="editLoggedSymptom(editForm)" #editForm="ngForm">
-
-
+    <div class="container-md">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent">
+          <li class="breadcrumb-item"><a routerLink="/" class="text-decoration-none text-dark">Home</a></li>
+          <li class="breadcrumb-item"><a routerLink="/all-logged-symptoms" class="text-decoration-none text-dark">All Logged Symptoms</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Edit Logged Symptom</li>
+        </ol>
+      </nav>
   
-    <div class="form-group">
-        <label for="symptom_id">Symptom:</label>
-        <select name="symptom_id" id="symptom_id" [(ngModel)]="selectedSymptomId" class="form-select" required>
+      <h1 class="mb-4">Edit Symptom</h1>
+      <div class="row justify-content-center">
+
+      <form (ngSubmit)="editLoggedSymptom(editForm)" #editForm="ngForm">
+        <div class="form-group">
+          <label for="symptom_id">Symptom:</label>
+          <select name="symptom_id" id="symptom_id" [(ngModel)]="selectedSymptomId" class="form-select" required>
             <option value="">Please select a Symptom</option>
             <option [value]="symptom.id" *ngFor="let symptom of allSymptom" [selected]="symptom.id === selectedSymptomId">
-                {{ symptom.name }}
+              {{ symptom.name }}
             </option>
-        </select>
-    </div>
-    
-  
-    <div class="form-group">
-        <label for="log_time">Logged Time:</label>
-        <input type="datetime-local" class="form-control" id="log_time" name="log_time" [(ngModel)]="log_time" required>
-      </div>
-      
-    
-    <div class="form-group">
-        <label for="severity">Severity:</label>
-        <input type="number" class="form-control" id="severity" name="severity" [(ngModel)]="symptom.severity" required min="1" max="10">
-        <!-- Add a validation message for severity -->
-        <div *ngIf="editForm.controls['severity'].errors && editForm.controls['severity'].touched" class="text-danger">
-            Severity is required and must be between 1 and 10.
+          </select>
         </div>
-    </div>
-    
-    <!-- Add a textarea for note -->
-    <div class="form-group">
-        <label for="note">Note:</label>
-        <textarea class="form-control" id="note" name="note" [(ngModel)]="symptom.note"></textarea>
-    </div>
   
-    <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid">Save Changes</button>
-</form>
-</section>
+        <div class="form-group">
+          <label for="log_time">Logged Time:</label>
+          <input type="datetime-local" class="form-control" id="log_time" name="log_time" [(ngModel)]="log_time" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="severity">Severity:</label>
+          <input type="number" class="form-control" id="severity" name="severity" [(ngModel)]="symptom.severity" required min="1" max="10">
+          <!-- Add a validation message for severity -->
+          <div *ngIf="editForm.controls['severity'].errors && editForm.controls['severity'].touched" class="text-danger">
+            Severity is required and must be between 1 and 10.
+          </div>
+        </div>
+  
+        <!-- Add a textarea for note -->
+        <div class="form-group">
+          <label for="note">Note:</label>
+          <textarea class="form-control" id="note" name="note" [(ngModel)]="symptom.note"></textarea>
+        </div>
+  
+        <div class="form-group">
+          <div class="d-flex justify-content-between">
+            <button routerLink="/all-appointments" class="btn btn-primary mb-3 mr-3"><i class="bi bi-arrow-left"></i> Back</button>
+            <button type="submit" class="btn btn-primary mb-3 ml-3">Save Changes</button>
+          </div>
+        </div>
+      </form>
+      </div> 
+    </div>
+  </section>
+  

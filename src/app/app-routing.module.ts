@@ -34,7 +34,9 @@ const routes: Routes = [
   },
   { path: 'appointment/view-appointment/:aId',
     title: 'View Appointment',
-    component: ViewAppointmentComponent
+    component: ViewAppointmentComponent,
+    canActivate: [AuthGuard]
+
   },
   { path: 'all-appointments',
     title: 'All Appointment',
@@ -44,11 +46,14 @@ const routes: Routes = [
   },
   { path: 'appointment/edit-appointment/:aId',
     title: 'Edit Appointment',
-    component: EditAppointmentComponent
+    component: EditAppointmentComponent,
+    canActivate: [AuthGuard]
+
   },
   { path: 'delete-appointment/:aId',
     title: 'Delete Appointment',
-    component: DeleteAppointmentComponent
+    component: DeleteAppointmentComponent,
+    canActivate: [AuthGuard]
   },
   
   //symptom routes

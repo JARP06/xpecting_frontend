@@ -10,7 +10,6 @@ import { Appointment } from 'src/app/models/appointment';
 import { NgForm } from '@angular/forms'; // Import NgForm
 import Swal from 'sweetalert2';
 
-
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -23,10 +22,9 @@ export class UserProfileComponent implements OnInit {
   user: Users | null = null;
   upcomingAppointments: Appointment[] = [];
   recentSymptomLogs: SymptomLog[] = [];
-  newPassword: string = ''; 
-
-
-    @ViewChild('newPassword') newPasswordElement!: ElementRef<HTMLInputElement>;
+  currentPassword: string = '';
+  newPassword: string = '';
+  confirmNewPassword: string = '';
 
   constructor(
     private symptomLogService: SymptomLogService,
@@ -123,9 +121,20 @@ export class UserProfileComponent implements OnInit {
     const age = this.user ? this.getUserAge(this.user.date_of_birth) : 0;
     return age <= 17 || age >= 35;
   }
-  resetPassword(id: number, newPassword: string): void {
-    const newPassword = this.newPasswordElement.nativeElement.value;
-    this.authService.resetPassword(id, newPassword).subscribe({
+
+  resetPassword(id: number, currentPassword: string, newPassword: string, confirmNewPassword: string): void {
+    if (newPassword !== confirmNewPassword) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'New password and confirm new password do not match',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
+
+    this.authService.resetPassword(id, currentPassword, newPassword, confirmNewPassword).subscribe({
         next: (res) => {
             console.log(res);
             if (res.status === 'success') {
@@ -156,5 +165,5 @@ export class UserProfileComponent implements OnInit {
             }
         }
     });
+  }
 }
-}  

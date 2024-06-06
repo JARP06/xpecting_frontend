@@ -1,4 +1,16 @@
 <section class="appointment-form-container">
+  <div class="container-md">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bg-transparent">
+        <li class="breadcrumb-item"><a routerLink="/" class="text-decoration-none text-dark">Home</a></li>
+        <li class="breadcrumb-item"><a routerLink="/all-appointments" class="text-decoration-none text-dark">All Appointments</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add Appointment</li>
+      </ol>
+    </nav>
+
+    <h1 class="mb-4">Add Appointment</h1>
+
+    <div class="row justify-content-center">
   <form #appointmentForm="ngForm" (ngSubmit)="addNewAppointment(appointmentForm)">
     <div class="form-group">
       <input type="hidden" name="user_id" [ngModel]="user_id">
@@ -26,4 +38,6 @@
   
     <button type="submit" class="btn btn-primary">Add Appointment</button>
   </form>
+  </div>
+  </div>
 </section>

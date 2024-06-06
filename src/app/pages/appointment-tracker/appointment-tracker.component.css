@@ -11,6 +11,7 @@
   
   .container {
     flex: 3;
+    margin-top: 90px;
   }
   
   .resource-section {

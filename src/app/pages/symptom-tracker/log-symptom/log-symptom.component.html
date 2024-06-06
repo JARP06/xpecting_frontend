@@ -1,5 +1,16 @@
 <section class="log-symptom-container">
+  <div class="container-md">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bg-transparent">
+        <li class="breadcrumb-item"><a routerLink="/" class="text-decoration-none text-dark">Home</a></li>
+        <li class="breadcrumb-item"><a routerLink="/all-logged-symptoms" class="text-decoration-none text-dark">All Logged Symptoms</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add Symptom</li>
+      </ol>
+    </nav>
 
+    <h1 class="mb-4">Add Symptom</h1>
+
+    <div class="row justify-content-center">
     <form (ngSubmit)="logNewSymptom(symptomLogForm)" #symptomLogForm="ngForm">
       <div class="form-group">
         <input type="hidden" name="user_id" [ngModel]="user_id">
@@ -36,5 +47,7 @@
   
       <button type="submit" class="btn btn-primary">Log Symptom</button>
     </form>
+    </div>
+    </div>
   </section>
   

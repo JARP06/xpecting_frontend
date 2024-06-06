@@ -1,0 +1,18 @@
+section{
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+.btn-back {
+    margin-bottom: 20px;
+  }
+  .card {
+    border-radius: 10px;
+    width: 50%;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }

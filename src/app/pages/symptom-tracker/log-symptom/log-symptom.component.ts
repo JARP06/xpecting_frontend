@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LogSymptomComponent implements OnInit {
   user_id: string = '';
   symptom_id: string = '';
-  log_time: string = '';
+  log_time: string = ''; // Initialize with empty string
   note: string = '';
   severity: number = 1;
 
@@ -31,6 +31,7 @@ export class LogSymptomComponent implements OnInit {
   ngOnInit(): void {
     this.getLoggedInUserId();
     this.getAllSymptom();
+    this.setDefaultLogTime(); // Call the method to set default log time
   }
 
   getLoggedInUserId(): void {
@@ -54,6 +55,22 @@ export class LogSymptomComponent implements OnInit {
         console.error('Error fetching symptoms', error);
       }
     });
+  }
+
+  setDefaultLogTime() {
+    // Set default log time to current time
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = this.padZero(currentDate.getMonth() + 1);
+    const day = this.padZero(currentDate.getDate());
+    const hours = this.padZero(currentDate.getHours());
+    const minutes = this.padZero(currentDate.getMinutes());
+    // Format: YYYY-MM-DDTHH:MM
+    this.log_time = `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+
+  padZero(value: number): string {
+    return value < 10 ? `0${value}` : `${value}`;
   }
 
   logNewSymptom(symptomLogForm: NgForm) {

@@ -1,8 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white" [ngClass]="{'overlay-header': isScrolled}">
+<nav class="navbar navbar-expand-lg navbar-light bg-white" [ngClass]="{ 'scrolled': isScrolled }">
   <div class="container-fluid d-flex justify-content-between align-items-center">
     <!-- Logo -->
     <a class="navbar-brand" href="#" routerLink="/">
-      <img src="assets/images/Xpecting (Small).png" alt="Logo" class="logo">
+      <img class="logo" [ngStyle]="{'width.px': isScrolled ? 100 : 170}" src="assets/images/Xpecting (Small).png" alt="Logo" class="logo">
     </a>
 
     <!-- Toggler for mobile view -->
