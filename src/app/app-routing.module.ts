@@ -16,6 +16,7 @@ import { DeleteSymptomLoggedComponent } from './pages/symptom-tracker/delete-sym
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { AuthGuard } from './guard/auth.guard';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
+import { FaqComponent } from './pages/faq/faq.component';
 
 const routes: Routes = [
   { path: '', title: 'Home', component:HomeComponent},
@@ -26,6 +27,10 @@ const routes: Routes = [
   { path: 'pregnancy-101',
     title: 'Pregnancy 101',
     component: Pregnancy101Component
+  },
+  { path: 'faqs',
+    title: 'FAQs',
+    component: FaqComponent
   },
  
   { path: 'create-appointment',
@@ -102,6 +107,11 @@ const routes: Routes = [
   component: AboutUsComponent,
   
 },
+// {
+//   path: '**',
+//   title: 'Page Not Found',
+//   component: NotFoundComponent,
+// },
 ];
 
 

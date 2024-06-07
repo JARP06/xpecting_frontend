@@ -2,13 +2,12 @@
   <div class="container py-5" *ngIf="user">
     <div class="row mb-4">
       <div class="col">
-        
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-      <li class="breadcrumb-item active" aria-current="page">profile</li>
-    </ol>
-  </nav>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">profile</li>
+          </ol>
+        </nav>
       </div>
     </div>
 
@@ -18,43 +17,48 @@
           <div class="card-body text-center">
             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
               class="rounded-circle img-fluid" [ngClass]="{ 'red-border': isAgeRedBorder() }" style="width: 150px;">
-            <h5 class="my-3">{{ user.f_name }} {{ user.l_name }}</h5>
+            <h5 class="my-3 text-success font-weight-bold">{{ user.f_name }} {{ user.l_name }}</h5>
             <p class="text-muted mb-1">{{ user.location }}</p>
             <div *ngIf="isAgeRedBorder()" class="alert alert-warning">
-              Your pregnancy is High Risk. Read more below.
+              Your pregnancy is High Risk. <a routerLink="/pregnancy-101">Read More</a>
             </div>
             <div class="d-flex justify-content-center mb-2">
-              
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">Reset Password</button>
+              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">Reset Password</button>
             </div>
           </div>
         </div>
-
+ 
         <div class="card mt-4">
           <div class="card-body p-0">
             <ul class="list-group list-group-flush rounded-3">
-              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <li class="list-group-item d-flex justify-content-center align-items-center p-3">
                 <i class="fas fa-calendar-check fa-lg text-success"></i>
-                <p class="mb-0"><strong>Due Date:</strong> {{ user.due_date | date:'shortDate' }}</p>
+                <p class="mb-0 text-center">
+                  <strong class="text-success font-weight-bold">Due Date:</strong> {{ user.due_date | date:'shortDate' }}
+                </p>
               </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <li class="list-group-item d-flex justify-content-center align-items-center p-3">
                 <i class="fas fa-hourglass-half fa-lg text-warning"></i>
-                <p class="mb-0"><strong>Weeks Remaining:</strong> {{ getWeeksRemaining(user.due_date) }}</p>
+                <p class="mb-0 text-center">
+                  <strong class="text-success font-weight-bold">Weeks Remaining:</strong> {{ getWeeksRemaining(user.due_date) }}
+                </p>
               </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <li class="list-group-item d-flex justify-content-center align-items-center p-3">
                 <i class="fas fa-birthday-cake fa-lg text-info"></i>
-                <p class="mb-0"><strong>Age:</strong> {{ getUserAge(user.date_of_birth) }}</p>
+                <p class="mb-0 text-center">
+                  <strong class="text-success font-weight-bold">Age:</strong> {{ getUserAge(user.date_of_birth) }}
+                </p>
               </li>
             </ul>
           </div>
         </div>
-      </div>
+        </div>
 
       <div class="col-lg-8">
         <div class="card mb-4">
           <div class="card-body">
             <div class="row">
-              <div class="col-sm-3">
+              <div class="col-sm-3 text-success font-weight-bold">
                 <p class="mb-0">Full Name</p>
               </div>
               <div class="col-sm-9">
@@ -63,7 +67,7 @@
             </div>
             <hr>
             <div class="row">
-              <div class="col-sm-3">
+              <div class="col-sm-3 text-success font-weight-bold">
                 <p class="mb-0">Email</p>
               </div>
               <div class="col-sm-9">
@@ -72,7 +76,7 @@
             </div>
             <hr>
             <div class="row">
-              <div class="col-sm-3">
+              <div class="col-sm-3 text-success font-weight-bold">
                 <p class="mb-0">Phone</p>
               </div>
               <div class="col-sm-9">
@@ -81,16 +85,7 @@
             </div>
             <hr>
             <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Mobile</p>
-              </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0">{{ user.phone_num }}</p>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
+              <div class="col-sm-3 text-success font-weight-bold">
                 <p class="mb-0">Address</p>
               </div>
               <div class="col-sm-9">
@@ -104,10 +99,11 @@
           <div class="col-md-6 mb-4">
             <div class="card h-100">
               <div class="card-body">
-                <h5 class="card-title">Symptom Logs</h5>
-                <div *ngIf="errorMessage" class="alert alert-danger">
-                  {{ errorMessage }}
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h5 class="card-title mb-0 text-success font-weight-bold">Symptom Logs</h5>
+                  <button class="btn btn-warning" routerLink="/create-symptom-log">Add Symptom Log</button>
                 </div>
+    
                 <div *ngFor="let log of symptomLogs.slice(0, 3)" class="card mb-3 bg-light">
                   <div class="card-header bg-primary text-white">
                     {{ log.log_time | date:'short' }}
@@ -126,7 +122,10 @@
           <div class="col-md-6 mb-4">
             <div class="card h-100">
               <div class="card-body">
-                <h5 class="card-title">Appointments</h5>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h5 class="card-title mb-0 text-success font-weight-bold">Appointments</h5>
+                  <button class="btn btn-warning" routerLink="/create-appointment">Add Appointment</button>
+                </div>
                 <div *ngFor="let appointment of appointments" class="card mb-3 bg-light">
                   <div class="card-header bg-success text-white">
                     {{ appointment.scheduled_time | date:'short' }}
@@ -145,6 +144,7 @@
       </div>
     </div>
   </div>
+  
   <div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -152,26 +152,24 @@
           <h5 class="modal-title" id="resetPasswordModalLabel">Reset Password</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form *ngIf="user" (ngSubmit)="resetPassword(user.id, currentPassword, newPassword, confirmNewPassword)">
-          <div>
-            <label for="currentPassword">Current Password:</label>
-            <input type="password" id="currentPassword" [(ngModel)]="currentPassword" name="currentPassword" required>
+        <form *ngIf="user" (ngSubmit)="resetPassword(user.id, currentPassword, newPassword, confirmNewPassword)" class="p-3">
+          <div class="mb-3">
+            <label for="currentPassword" class="form-label">Current Password:</label>
+            <input type="password" id="currentPassword" [(ngModel)]="currentPassword" name="currentPassword" class="form-control" required>
           </div>
-          <div>
-            <label for="newPassword">New Password:</label>
-            <input type="password" id="newPassword" [(ngModel)]="newPassword" name="newPassword" required>
+          <div class="mb-3">
+            <label for="newPassword" class="form-label">New Password:</label>
+            <input type="password" id="newPassword" [(ngModel)]="newPassword" name="newPassword" class="form-control" required>
           </div>
-          <div>
-            <label for="confirmNewPassword">Confirm New Password:</label>
-            <input type="password" id="confirmNewPassword" [(ngModel)]="confirmNewPassword" name="confirmNewPassword" required>
+          <div class="mb-3">
+            <label for="confirmNewPassword" class="form-label">Confirm New Password:</label>
+            <input type="password" id="confirmNewPassword" [(ngModel)]="confirmNewPassword" name="confirmNewPassword" class="form-control" required>
           </div>
-          <button type="submit">Reset Password</button>
-        </form>
-        
           <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Reset Password</button>
-          </div>   
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Reset Password</button>
+          </div> 
+        </form>
       </div>
     </div>
   </div>

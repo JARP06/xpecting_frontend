@@ -24,6 +24,8 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
 import { PaginatorComponent } from './shared/components/paginator.component';
+import { FaqComponent } from './pages/faq/faq.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 
 @NgModule({
@@ -46,7 +48,9 @@ import { PaginatorComponent } from './shared/components/paginator.component';
     SymptomTrackerComponent,
     UserProfileComponent,
     AboutUsComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    FaqComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
