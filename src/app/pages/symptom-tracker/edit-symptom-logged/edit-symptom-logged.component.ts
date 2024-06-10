@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 export class EditSymptomLoggedComponent implements OnInit {
   user_id: string = '';
   symptom_id: string = '';
-  log_time: string = ''; // Change to string type
+  log_time: string = ''; 
   selectedSymptomId: string = '';
 
   allSymptom: any;
@@ -48,21 +48,19 @@ export class EditSymptomLoggedComponent implements OnInit {
       if (res.status == 'error'){
       }else{
         this.symptom = res.data;
-        // Assign selectedSymptomId with the value of symptom_id
         this.selectedSymptomId = this.symptom.symptom_id;
-        // Convert the log_time to ISO string format
         this.log_time = new Date(this.symptom.log_time).toISOString().slice(0, 16);
       }
     });
   }
-  editLoggedSymptom(data:NgForm){
-    // Format log_time before sending
+  
+  editLoggedSymptom(data: NgForm) {
     const formattedData = {
       ...data.value,
-      log_time: new Date(data.value.log_time).toISOString()  // Convert to ISO string
+      log_time: new Date(data.value.log_time).toISOString() 
     };
-    this.symptomLogService.editSymptomLogged(formattedData, this.slId).subscribe((res)=> {
-      if (res.status === 'success'){
+    this.symptomLogService.editSymptomLogged(formattedData, this.slId).subscribe((res) => {
+      if (res.status === 'success') {
         Swal.fire({
           position: 'center',
           icon: 'success',
@@ -70,7 +68,7 @@ export class EditSymptomLoggedComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
-          this.router.navigateByUrl('/courses');
+          this.router.navigateByUrl('/all-logged-symptoms'); 
         });
       } else {
         Swal.fire({
@@ -80,5 +78,5 @@ export class EditSymptomLoggedComponent implements OnInit {
         });
       }
     });
-  }
+  }  
 }

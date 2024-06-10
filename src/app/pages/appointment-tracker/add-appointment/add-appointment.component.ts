@@ -67,7 +67,7 @@ export class AddAppointmentComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500,
           }).then(() => {
-            this.router.navigateByUrl('/appointments');
+            this.router.navigateByUrl('/all-appointments'); // Redirect to '/all-appointments'
           });
         } else {
           Swal.fire({

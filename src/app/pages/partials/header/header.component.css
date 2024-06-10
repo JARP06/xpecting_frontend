@@ -14,10 +14,7 @@
 /* Background color on scroll */
 .navbar.scrolled {
   background-color: rgb(255, 255, 255) !important;
-}
-
-.overlay-header {
-  background-color: rgb(255, 255, 255); /* Background color on scroll */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
 

@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LogSymptomComponent implements OnInit {
   user_id: string = '';
   symptom_id: string = '';
-  log_time: string = ''; // Initialize with empty string
+  log_time: string = ''; 
   note: string = '';
   severity: number = 1;
 
@@ -31,7 +31,7 @@ export class LogSymptomComponent implements OnInit {
   ngOnInit(): void {
     this.getLoggedInUserId();
     this.getAllSymptom();
-    this.setDefaultLogTime(); // Call the method to set default log time
+    this.setDefaultLogTime();
   }
 
   getLoggedInUserId(): void {
@@ -41,7 +41,7 @@ export class LogSymptomComponent implements OnInit {
       },
       error: (err) => {
         console.error('Failed to get logged-in user ID', err);
-        // Handle error appropriately
+        
       }
     });
   }
@@ -58,14 +58,12 @@ export class LogSymptomComponent implements OnInit {
   }
 
   setDefaultLogTime() {
-    // Set default log time to current time
     const currentDate = new Date();
     const year = currentDate.getFullYear();
     const month = this.padZero(currentDate.getMonth() + 1);
     const day = this.padZero(currentDate.getDate());
     const hours = this.padZero(currentDate.getHours());
     const minutes = this.padZero(currentDate.getMinutes());
-    // Format: YYYY-MM-DDTHH:MM
     this.log_time = `${year}-${month}-${day}T${hours}:${minutes}`;
   }
 
@@ -76,7 +74,7 @@ export class LogSymptomComponent implements OnInit {
   logNewSymptom(symptomLogForm: NgForm) {
     if (symptomLogForm.valid) {
       const formValues = symptomLogForm.value;
-      formValues.user_id = this.user_id; // Ensure user_id is correctly set
+      formValues.user_id = this.user_id; 
       this.symptomLogService.addToSymptomLog(formValues).subscribe((res) => {
         if (res.status === 'success') {
           Swal.fire({
@@ -86,7 +84,7 @@ export class LogSymptomComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500,
           }).then(() => {
-            this.router.navigateByUrl('/symptom-logs');
+            this.router.navigateByUrl('/all-logged-symptoms'); 
           });
         } else {
           Swal.fire({
@@ -97,5 +95,5 @@ export class LogSymptomComponent implements OnInit {
         }
       });
     }
-  }
+  }  
 }

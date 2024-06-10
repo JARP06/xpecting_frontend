@@ -15,10 +15,9 @@ export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    // Subscribe to changes in the current user
     this.authService.currentUser$.subscribe((user) => {
       this.user = user;
-      this.isLoggedIn = !!user; // Update isLoggedIn based on user data
+      this.isLoggedIn = !!user; 
     });
   }
 

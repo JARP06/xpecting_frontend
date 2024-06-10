@@ -15,9 +15,9 @@ export class SymptomsService {
   constructor(private _http: HttpClient) {}
 
   /**
-   * This function will the post route in the api to add a new appointment to the database
-   * @param data Object - data collected from form fields
-   * @returns Response from the api
+   * 
+   * @param data 
+   * @returns 
    */
 
   getAllSymptoms(): Observable<ApiResponse<any>> {

@@ -125,18 +125,4 @@ export class AuthService {
     );
   }
 
-  // logout(): void {
-  //   localStorage.removeItem('token');
-  //   // Add any other logout logic here if necessary
-  // }
-  
-  // resetPassword(id: number, data: any): Observable<any> {
-  //   return this._http
-  //     .patch<any>(`${this.API_URL_AUTH}/reset-password/${id}`, data)
-  //     .pipe(
-  //       map((res) => {
-  //         return res;
-  //       })
-  //     );
-  // };
 }

@@ -1,65 +1,55 @@
-import { Component,EventEmitter,Input,OnInit,Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
+@Component({
+  selector: 'app-paginator',
+  template: `
+    <div class="mt-3 d-flex justify-content-center">
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+        <a class="page-link" href="#" (click)="goToPage(currentPage - 1, $event)" aria-label="Previous">
+  <span aria-hidden="true">&laquo;</span>
+  <span class="sr-only">Previous</span>
+</a>
+
+<ng-container *ngFor="let page of pageButtons">
+  <li class="page-item" [ngClass]="{'active': page === currentPage}">
+    <a class="page-link" href="#" (click)="goToPage(page, $event)">{{ page }}</a>
+  </li>
+</ng-container>
 
 
-  @Component({
-    selector: 'app-paginator',
-    template:`
-    <div class="mt-0 xs:flex-row xs:justify-between flex flex-col items-center px-2 py-2 bg-white border-t">
-      <div class="xs:mt-0.inline-flex.gap-2.mt-2">
-        <button [ngClass]="{'invisible' : currentPage === 1}"
-            (click)="goToPage(currentPage!-1)"
-            class="text-red-50 hover:bg-blue-500 bg-blue-400 px-2 text-sm font-semibold rounded-l "
-            >
-            <i class= "fa-solid fa-arrow-left"></i>
-            Prev
-        </button>
-    <!-- Page buttons -->
-        <button *ngFor="let page of pageButtons | slice: lowerButtonLimit: upperButtonLimit" 
-        [ngClass]="{'primary-bg-text-white' : page === currentPage, 'bg-blue-300 text-blue-700':page !== currentPage}"
-            (click)="goToPage(page)"
-            class="text-red-50 hover:bg-blue-500 bg-blue-400 px-2 text-sm font-semibold border-2 border-secondary-500"
-            >
-            {{page}}
-        </button>
-        <button [ngClass]="{'invisible' : currentPage === maxPages}"
-            (click)="goToPage(currentPage! + 1)"
-            class="text-red-50 hover:bg-blue-500 bg-blue-400 px-2 text-sm font-semibold rounded-l "
-            >
-            Next
-            <i class= "fa-solid fa-arrow-right"></i>
-        </button>
+<li class="page-item" [ngClass]="{'disabled': currentPage === maxPages}">
+<a class="page-link" href="#" (click)="goToPage(currentPage + 1, $event)" aria-label="Next">
+  <span aria-hidden="true">&raquo;</span>
+  <span class="sr-only">Next</span>
+</a>
 
-      </div>/.xs:mt-0.inline-flex.gap-2.mt-2
-    </div>/.mt-0.xs:flex-row.xs:justify-between.flex.flex-col.items-center.px-2.py-2.bg-white.border-t
-    `,
-    styles: [
-    ]
-    })
-    export class PaginatorComponent implements OnInit {
-    @Input('maxPages') maxPages: number = 0;
-    @Input('currentPage') currentPage: number = 0;
-    @Output ('pageChange' ) onPageChange = new EventEmitter<number>();
-    
-    constructor() { }
+</li>
 
-    buttonLimit: number = 5;
-    get lowerButtonLimit(): number{
-      return Math.abs(this.currentPage / this.buttonLimit) < 1 ? 0: this.currentPage - 3;
-    }
+        </ul>
+      </nav>
+    </div>
+  `,
+  styles: []
+})
+export class PaginatorComponent implements OnInit {
+  @Input() maxPages: number = 0;
+  @Input() currentPage: number = 0;
+  @Output() pageChange = new EventEmitter<number>();
 
-    get upperButtonLimit(): number{
-      return Math.min(this.maxPages, Math.abs(this.currentPage / this.buttonLimit)< 1 ? this.buttonLimit : this.currentPage + 2) ;
-    }
+  constructor() { }
 
-    get pageButtons(): number[]{
-      return new Array(this.maxPages).fill(null).map((v, i)=> i+ 1);
-    }
-    goToPage(newPage: number):void {
-      this.onPageChange.emit(newPage)
-    }
+  ngOnInit(): void {
+  }
 
-ngOnInit(): void {
+  get pageButtons(): number[] {
+    return Array.from({ length: this.maxPages }, (_, i) => i + 1);
+  }
+
+  goToPage(newPage: number, event: MouseEvent): void {
+    event.preventDefault(); 
+    this.pageChange.emit(newPage);
+  }
   
-}
-
+  
 }

@@ -18,7 +18,7 @@ export class LoginSignupComponent implements OnInit {
   isLoginError: boolean = false;
   loginErrorMessage: string = '';
 
-  user: any; // Ensure the user property is properly initialized
+  user: any; 
 
   constructor(
     private authService: AuthService,
@@ -26,10 +26,9 @@ export class LoginSignupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Subscribe to currentUser$ observable to get the user data
     this.authService.currentUser$.subscribe((user) => {
       if (user) {
-        this.user = user; // Assign the emitted user data to the user property
+        this.user = user; 
       }
     });
   }

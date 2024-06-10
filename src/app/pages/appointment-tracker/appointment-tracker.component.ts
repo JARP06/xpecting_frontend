@@ -13,6 +13,8 @@ import Swal from 'sweetalert2';
 export class AppointmentTrackerComponent implements OnInit {
 
   appointmentsData: Appointment[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 5; 
   errorMessage: string | null = null;
 
   constructor(
@@ -88,5 +90,19 @@ export class AppointmentTrackerComponent implements OnInit {
         });
       }
     });
+  }
+
+  onPageChanged(page: number): void {
+    this.currentPage = page;
+  }
+
+  get maxPages(): number {
+    return Math.ceil(this.appointmentsData.length / this.itemsPerPage);
+  }
+
+  get paginatedAppointments(): Appointment[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.appointmentsData.slice(startIndex, endIndex);
   }
 }

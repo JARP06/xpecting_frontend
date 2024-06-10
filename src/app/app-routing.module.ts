@@ -17,6 +17,7 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
 import { AuthGuard } from './guard/auth.guard';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
 import { FaqComponent } from './pages/faq/faq.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', title: 'Home', component:HomeComponent},
@@ -107,11 +108,11 @@ const routes: Routes = [
   component: AboutUsComponent,
   
 },
-// {
-//   path: '**',
-//   title: 'Page Not Found',
-//   component: NotFoundComponent,
-// },
+{
+  path: '**',
+  title: 'Page Not Found',
+  component: NotFoundComponent,
+},
 ];
 
 

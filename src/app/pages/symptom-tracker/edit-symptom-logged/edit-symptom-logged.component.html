@@ -30,13 +30,11 @@
         <div class="form-group">
           <label for="severity">Severity:</label>
           <input type="number" class="form-control" id="severity" name="severity" [(ngModel)]="symptom.severity" required min="1" max="10">
-          <!-- Add a validation message for severity -->
           <div *ngIf="editForm.controls['severity'].errors && editForm.controls['severity'].touched" class="text-danger">
             Severity is required and must be between 1 and 10.
           </div>
         </div>
   
-        <!-- Add a textarea for note -->
         <div class="form-group">
           <label for="note">Note:</label>
           <textarea class="form-control" id="note" name="note" [(ngModel)]="symptom.note"></textarea>

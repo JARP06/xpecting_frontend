@@ -1,83 +1,87 @@
 <section class="content-section ">
   
-<div class="container">
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb bg-transparent">
-      <li class="breadcrumb-item"><a routerLink="/" class="text-decoration-none text-dark">Home</a></li>
-      <li class="breadcrumb-item active" aria-current="page">All Appointment</li>
-    </ol>
-  </nav>
-  <h1>All Appointments</h1>
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bg-transparent">
+        <li class="breadcrumb-item"><a routerLink="/" class="text-decoration-none text-dark">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">All Appointment</li>
+      </ol>
+    </nav>
+    <h1>All Appointments</h1>
 
 
-  <div class="row my-3">
-    <div class="col">
-      <a
-        routerLink="/create-appointment"
-        class="btn btn-primary"
-        
-        >Add Appointment</a
-      >
+    <div class="row my-3">
+      <div class="col">
+        <a
+          routerLink="/create-appointment"
+          class="btn btn-primary"
+        >Add Appointment</a>
+      </div>
     </div>
-  </div>
 
-  <ng-container *ngIf="appointmentsData.length === 0; else appointmentsList">
-    <div class="alert alert-warning">
-      <p class="text-center">No appointments available, please try again later.</p>
+    <ng-container *ngIf="appointmentsData.length === 0; else appointmentsList">
+      <div class="alert alert-warning">
+        <p class="text-center">No appointments available, please try again later.</p>
+      </div>
+    </ng-container>
+
+    
+    <ng-template #appointmentsList>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Carer</th>
+            <th>Scheduled Time</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let appointment of paginatedAppointments">
+            <td>{{ appointment.f_name }} {{ appointment.l_name }}</td>
+            <td>{{ appointment.category }}</td>
+            <td>{{ appointment.scheduled_time | date: 'yyyy-MM-dd' }}</td>
+            <td>
+              <div class="d-flex align-items-center">
+                <a
+                  routerLink="/appointment/view-appointment/{{ appointment.id}}"
+                  class="btn btn-info"
+                >View</a>
+                <a
+                  routerLink="/appointment/edit-appointment/{{ appointment.id }}"
+                  class="btn btn-warning mx-2"
+                >Edit</a>
+                <button class="btn btn-danger" (click)="confirmDelete(appointment.id)">Delete</button>
+              </div>
+            </td>
+            
+          </tr>
+        </tbody>
+      </table>
+
+      <app-paginator 
+      [maxPages]="maxPages"
+      [currentPage]="currentPage"
+      (pageChange)="onPageChanged($event)">
+    </app-paginator>
+    </ng-template>
+  </div>
+  <div class="resource-section">
+    <h3>Tips</h3>
+    <div class="resource-card">
+      <h4>First Prenatal Visit</h4>
+      <p>Schedule your first prenatal visit as soon as you have a positive home pregnancy test. Good prenatal care is crucial for a healthy pregnancy and baby. The first appointment usually occurs between weeks 6 and 8. Start acting pregnant immediately, such as taking a prenatal vitamin and following a healthy diet. If you suspect a high-risk pregnancy, check with your practitioner for an earlier appointment.</p>
+    </div>  
+    <div class="resource-card">
+      <h4>Preparing for Your First Pregnancy Appointment</h4>
+      <p>Before your first prenatal appointment, prepare by:</p>
+      <ul>
+        <li>Make a list of key health facts, including personal medical history, mental health history, gynecological history, obstetrical history, and potential disease exposure.</li>
+        <li>Take stock of your medicine cabinet and note any medications and supplements you take.</li>
+        <li>Find out about health conditions that run in your and your partner’s families.</li>
+        <li>Jot down your questions to ensure you cover all your concerns during the appointment.</li>
+      </ul>
     </div>
-  </ng-container>
-
-  
-  <ng-template #appointmentsList>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Carer</th>
-          <th>Scheduled Time</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let appointment of appointmentsData">
-          <td>{{ appointment.f_name }} {{ appointment.l_name }}</td>
-          <td>{{ appointment.category }}</td>
-          <td>{{ appointment.scheduled_time | date: 'yyyy-MM-dd' }}</td>
-          <td>
-            <div class="d-flex align-items-center">
-              <a
-                routerLink="/appointment/view-appointment/{{ appointment.id}}"
-                class="btn btn-info"
-              >View</a>
-              <a
-                routerLink="/appointment/edit-appointment/{{ appointment.id }}"
-                class="btn btn-warning mx-2"
-              >Edit</a>
-              <button class="btn btn-danger" (click)="confirmDelete(appointment.id)">Delete</button>
-            </div>
-          </td>
-          
-        </tr>
-      </tbody>
-    </table>
-  </ng-template>
-</div>
-<div class="resource-section">
-  <h3>Tips</h3>
-  <div class="resource-card">
-    <h4>First Prenatal Visit</h4>
-    <p>Schedule your first prenatal visit as soon as you have a positive home pregnancy test. Good prenatal care is crucial for a healthy pregnancy and baby. The first appointment usually occurs between weeks 6 and 8. Start acting pregnant immediately, such as taking a prenatal vitamin and following a healthy diet. If you suspect a high-risk pregnancy, check with your practitioner for an earlier appointment.</p>
-  </div>  
-  <div class="resource-card">
-    <h4>Preparing for Your First Pregnancy Appointment</h4>
-    <p>Before your first prenatal appointment, prepare by:</p>
-    <ul>
-      <li>Make a list of key health facts, including personal medical history, mental health history, gynecological history, obstetrical history, and potential disease exposure.</li>
-      <li>Take stock of your medicine cabinet and note any medications and supplements you take.</li>
-      <li>Find out about health conditions that run in your and your partner’s families.</li>
-      <li>Jot down your questions to ensure you cover all your concerns during the appointment.</li>
-    </ul>
+    
   </div>
-  
-</div>
 </section>

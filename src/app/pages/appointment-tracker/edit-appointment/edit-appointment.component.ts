@@ -13,9 +13,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class EditAppointmentComponent implements OnInit {
 
-  scheduled_time: string = ''; // Change to string type
-  loggedInUserId: string = ''; // Add this variable
-
+  scheduled_time: string = ''; 
+  loggedInUserId: string = ''; 
   allCarers: any;
   aId: any;
   appointment: any;
@@ -82,7 +81,7 @@ export class EditAppointmentComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
-          this.router.navigateByUrl('/courses');
+          this.router.navigateByUrl('/all-appointments');
         });
       } else {
         Swal.fire({

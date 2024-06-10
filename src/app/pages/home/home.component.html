@@ -1,8 +1,8 @@
 <div class="hero-container">
   <div class="shape-section">
     <div class="overlay">
-      <p class="text-center">Everything <br> You <br> should be</p><br>
-      <h1><span class="highlight">X</span>PECTING</h1>
+      <h1><span class="highlight">X</span>PECTING</h1><br>
+      <p class="text-center"> Empowering Expectant Mother</p>
     </div>
   </div>
   <div class="video-section">
@@ -12,7 +12,7 @@
 <div class="intro-section">
   <h2>For All XPECTING Moms</h2>
 </div>
- 
+
 <section class="content-section">
   <div class="left-image">
     <img src="assets/images/pregnant-woman-belly.jpg" alt="Pregnant Woman">
@@ -25,6 +25,7 @@
     <p>Our mission is to empower every expecting mother with the knowledge and support necessary for a healthy and fulfilling pregnancy. We are committed to providing accurate, up-to-date information and resources tailored to meet your individual needs.</p>
     <button class="sign-up-btn" routerLink="/login-signup">SIGN UP</button>
   </div>
+
   <div class="resource-section">
     <h3>Resources</h3>
     <div class="resource-card">
@@ -47,12 +48,36 @@
 </section>
 
 <div class="intro-section">
+  <h2>Due Date Calculator</h2>
+</div>
+
+<section class="content-section calculator-section">
+  <div class="calculator-container">
+    <h3>Calculate Your Due Date</h3>
+    <div *ngIf="alertMessage" class="alert">{{ alertMessage }}</div>
+    <form (ngSubmit)="calculateDueDate()">
+      <div class="form-group">
+        <label for="lastPeriodDate" class="font-weight-bold">Last Period Date:</label>
+        <input type="date" id="lastPeriodDate" [(ngModel)]="lastPeriodDate" name="lastPeriodDate" required>
+      </div>
+      <div class="form-group">
+        <label for="cycleLength" class="font-weight-bold">Cycle Length (days):</label>
+        <p class="font-weight-bold text-secondary">Some women's cycles are not exactly 28 days. Adjust the cycle length if your cycle is shorter or longer than 28 days.</p>
+        <input type="number" id="cycleLength" [(ngModel)]="cycleLength" name="cycleLength" value="28" required>
+      </div>
+      <button type="submit" class="calculate-btn ">Calculate Due Date</button>
+    </form>
+    <p *ngIf="dueDate" class="result-text">Expected Due Date: {{ dueDate }}</p>
+  </div>
+</section>
+
+<div class="intro-section">
   <h2>Prenatal Nutrition</h2>
 </div>
 
 <section class="content-section">
   <div class="right-info">
-    <p> Your nutritional health, before and during pregnancy, influences the health of your developing baby. Here are some important facts to keep in mind:</p>
+    <p>Your nutritional health, before and during pregnancy, influences the health of your developing baby. Here are some important facts to keep in mind:</p>
     <ul>
       <li><strong>Eat a variety of healthy foods each day:</strong> Vegetables and fruits, whole grain foods, and protein foods are all part of healthy eating during pregnancy and contribute to the nutritional health of you and your baby. Try making half your plate vegetables and fruits at meals and snack times. Choose foods that have little to no added sodium, sugars, or saturated fat. If you are not able to eat a variety of foods due to nausea or vomiting, speak to your health care provider.</li>
       <li><strong>Choose foods with healthy fats instead of saturated fat:</strong> Foods like nuts, seeds, fatty fish, and vegetable oils contain healthy fats, such as omega-3 fatty acids. You need more omega-3 fatty acids when you are pregnant to support the growth of your baby's brain and tissues.</li>

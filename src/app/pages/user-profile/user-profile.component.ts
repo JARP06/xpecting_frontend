@@ -57,7 +57,7 @@ export class UserProfileComponent implements OnInit {
       (res) => {
         if (res && res.status === 'success' && res.data && Array.isArray(res.data)) {
           this.symptomLogs = res.data.filter(symptom => symptom.user_id === this.user?.id);
-          this.recentSymptomLogs = this.symptomLogs.slice(-3); // Get last 3 symptom logs
+          this.recentSymptomLogs = this.symptomLogs.slice(-3); 
           console.log('Symptom logs:', this.symptomLogs);
           this.errorMessage = null;
         } else {
@@ -76,9 +76,8 @@ export class UserProfileComponent implements OnInit {
       (res) => {
         if (res.status === 'success' && Array.isArray(res.data)) {
           this.appointments = res.data.filter(appointment => appointment.user_id === this.user?.id);
-          console.log('All Appointments:', this.appointments); // Log all appointments
+          console.log('All Appointments:', this.appointments); 
           const now = new Date();
-          // Filter appointments in the future and sort by scheduled time
           const futureAppointments = this.appointments
             .filter(appointment => new Date(appointment.scheduled_time) >= now)
             .sort((a, b) => new Date(a.scheduled_time).getTime() - new Date(b.scheduled_time).getTime());
