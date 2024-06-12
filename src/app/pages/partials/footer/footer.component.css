@@ -1,7 +1,39 @@
-footer {
-    position: static;
-    bottom: 0;
-    width: 100%;
-   margin-top: 50px;
-   background-color: #FF5757;
+
+  /* Add this CSS to your stylesheet */
+.custom-footer {
+    background-color: #FF5757;
   }
+  
+  .custom-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .custom-section {
+    width: 100%;
+  }
+  
+  .footer-logo {
+    margin-right: 20px;
+    height: 50px; /* Adjust the height as needed */
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  /* Optional: Adjust button styles if needed */
+  .btn-outline-light {
+    border-color: white;
+    color: white;
+  }
+  
+  .btn-outline-light:hover {
+    background-color: white;
+    color: #333;
+  }
+  
